@@ -6,6 +6,8 @@ public class ToolControllerFactory {
 
     public static IToolController[] createToolControllers() {
         return new IToolController[] {
+                new TestToolController(),
+                new TestToolController(),
                 new TestToolController()
         };
     }

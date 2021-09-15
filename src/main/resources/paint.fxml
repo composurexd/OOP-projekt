@@ -78,7 +78,7 @@
     </MenuBar>
       <ToolBar prefHeight="40.0" prefWidth="200.0">
          <items>
-            <HBox fx:id="toolbarButtons" />
+            <HBox fx:id="toolbarButtonsView" />
          </items>
       </ToolBar>
   </children>
