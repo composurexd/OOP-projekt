@@ -4,4 +4,6 @@ module org.runtimeterror {
     requires javafx.fxml;
     opens org.runtimeterror;
     exports org.runtimeterror;
+    exports org.runtimeterror.toolcontrollers;
+    opens org.runtimeterror.toolcontrollers;
 }

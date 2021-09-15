@@ -3,6 +3,9 @@ package org.runtimeterror;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.layout.HBox;
+
+import java.util.Arrays;
 
 public class Controller {
     
@@ -10,10 +13,14 @@ public class Controller {
     @FXML
     public Button testButton;
 
+    @FXML
+    public HBox toolbarButtons;
+
     // On app init (everything has been bound)
     @FXML
     public void initialize() {
-        System.out.println(testButton);
+        IToolController[] toolControllers = ToolControllerFactory.createToolControllers();
+        Arrays.stream(toolControllers).forEach(c -> toolbarButtons.getChildren().add(c.getButton()));
     }
 
     // Method bound in paint.fxml
