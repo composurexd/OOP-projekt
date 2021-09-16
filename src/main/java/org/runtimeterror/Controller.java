@@ -2,9 +2,15 @@ package org.runtimeterror;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleButton;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.InputEvent;
+import javafx.scene.input.ScrollEvent;
+import javafx.scene.input.ZoomEvent;
 import javafx.scene.layout.HBox;
 
 import java.util.ArrayList;
@@ -19,6 +25,13 @@ public class Controller {
 
     @FXML
     public HBox toolbarButtonsView;
+
+    @FXML
+    public ScrollPane scrollPane;
+
+    @FXML
+    public ImageView imageView;
+
 
     List<ToggleButton> toolbarButtonsList = new ArrayList<>();
 
@@ -48,4 +61,17 @@ public class Controller {
         System.out.println("Button clicked!");
     }
 
+    // Method to zoom in/out the image with ctrl+scroll
+    @FXML
+    public void zoom(ScrollEvent e) {
+        if (e.isControlDown()) {
+            double zoomFactor = 1.05;
+            double deltaY = e.getDeltaY();
+            if (deltaY < 0) {
+                zoomFactor = 0.95;
+            }
+            imageView.setScaleX(imageView.getScaleX() * zoomFactor);
+            imageView.setScaleY(imageView.getScaleX() * zoomFactor);
+        }
+    }
 }
