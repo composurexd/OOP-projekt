@@ -1,6 +1,7 @@
 package org.runtimeterror;
 
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
@@ -63,10 +64,18 @@ public class Controller {
 
     // Method to zoom in/out the image with ctrl+scroll
     @FXML
+    // Variable to prevent infinite zooming, attribute should probably be held by an object from the model
+    int minmax = 0;
     public void zoom(ScrollEvent e) {
-        if (e.isControlDown()) {
+        double deltaY = e.getDeltaY();
+        if (deltaY < 0 && e.isControlDown() && minmax != -20) {
+            minmax--;
+        }
+        if (deltaY > 0 && e.isControlDown() && minmax != 20) {
+            minmax++;
+        }
+        if (e.isControlDown() && minmax != 20 && minmax != -20) {
             double zoomFactor = 1.05;
-            double deltaY = e.getDeltaY();
             if (deltaY < 0) {
                 zoomFactor = 0.95;
             }
