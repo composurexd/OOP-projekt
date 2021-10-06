@@ -1,10 +1,17 @@
 package org.runtimeterror;
 
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleButton;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.InputEvent;
+import javafx.scene.input.ScrollEvent;
+import javafx.scene.input.ZoomEvent;
 import javafx.scene.layout.HBox;
 
 import java.util.ArrayList;
@@ -19,6 +26,13 @@ public class Controller {
 
     @FXML
     public HBox toolbarButtonsView;
+
+    @FXML
+    public ScrollPane scrollPane;
+
+    @FXML
+    public ImageView imageView;
+
 
     List<ToggleButton> toolbarButtonsList = new ArrayList<>();
 
@@ -48,4 +62,25 @@ public class Controller {
         System.out.println("Button clicked!");
     }
 
+    // Method to zoom in/out the image with ctrl+scroll
+    @FXML
+    // Variable to prevent infinite zooming, attribute should probably be held by an object from the model
+    int minmax = 0;
+    public void zoom(ScrollEvent e) {
+        double deltaY = e.getDeltaY();
+        if (deltaY < 0 && e.isControlDown() && minmax != -20) {
+            minmax--;
+        }
+        if (deltaY > 0 && e.isControlDown() && minmax != 20) {
+            minmax++;
+        }
+        if (e.isControlDown() && minmax != 20 && minmax != -20) {
+            double zoomFactor = 1.05;
+            if (deltaY < 0) {
+                zoomFactor = 0.95;
+            }
+            imageView.setScaleX(imageView.getScaleX() * zoomFactor);
+            imageView.setScaleY(imageView.getScaleX() * zoomFactor);
+        }
+    }
 }
